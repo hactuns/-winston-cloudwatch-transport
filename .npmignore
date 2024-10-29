@@ -1,0 +1,4 @@
+.npmrc
+!dist/
+!lib/
+.env

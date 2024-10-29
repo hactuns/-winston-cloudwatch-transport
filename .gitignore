@@ -1,0 +1,7 @@
+dist
+node_modules
+.npmrc
+yarn-error.log
+.env
+build
+lib
