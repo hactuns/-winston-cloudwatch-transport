@@ -10,11 +10,12 @@ class CloudwatchTransport extends TransportStream {
   }
 
   override log(info: unknown, callback: Function) {
-    callback();
+    console.log(info);
+
     // Avoid serverless shutdown
-    // setTimeout(() => {
-    //   callback();
-    // }, 2_500);
+    setTimeout(() => {
+      callback();
+    }, 2_500);
   }
 }
 
