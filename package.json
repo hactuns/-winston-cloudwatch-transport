@@ -1,5 +1,5 @@
 {
-  "name": "@winston/cloudwatch-transport",
+  "name": "cloudwatch-transport",
   "version": "0.0.1",
   "description": "Cloudwatch transport for winston logger",
   "keywords": [
