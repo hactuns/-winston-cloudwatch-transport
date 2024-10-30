@@ -1,8 +1,8 @@
-import type { HTTPError, KyInstance } from 'ky';
 import aws4, { type Request } from 'aws4';
+import type { KyInstance } from 'ky';
 import ky from 'ky';
 
-interface CloudwatchClientOptions {
+export interface CloudwatchClientOptions {
   readonly logGroupName: string;
   readonly logStreamName: string;
   readonly awsCredentials: {
@@ -25,14 +25,14 @@ export class CloudwatchClient implements CloudwatchClientOptions {
   public readonly logStreamName: string;
   public readonly awsCredentials: CloudwatchClientOptions['awsCredentials'];
 
-  private initialize = false;
+  private initialize = true;
 
   constructor(opt: CloudwatchClientOptions) {
     this.logGroupName = opt.logGroupName;
     this.logStreamName = opt.logStreamName;
     this.awsCredentials = opt.awsCredentials;
 
-    this.initialize = false;
+    this.initialize = true;
 
     this.client = ky.create({
       method: 'post',
@@ -84,14 +84,20 @@ export class CloudwatchClient implements CloudwatchClientOptions {
       });
   }
 
-  private async initLogStream() {
-    if (this.initialize) {
+  async initLogStream() {
+    if (!this.initialize) {
       return;
     }
 
     return this.createLogGroup()
       .catch(() => undefined)
-      .finally(() => this.createLogStream().catch(() => undefined));
+      .finally(() =>
+        this.createLogStream()
+          .catch(() => undefined)
+          .finally(() => {
+            this.initialize = true;
+          })
+      );
   }
 
   createLogStream() {
@@ -111,8 +117,21 @@ export class CloudwatchClient implements CloudwatchClientOptions {
     return this.getAWSRequester(CloudwatchAction.CreateLogGroup, payload);
   }
 
-  async sendLog() {
+  async submitLog(info: unknown) {
     await this.initLogStream();
+
+    const payload = {
+      logGroupName: this.logGroupName,
+      logStreamName: this.logStreamName,
+      logEvents: [
+        {
+          timestamp: Date.now(),
+          message: info,
+        },
+      ],
+    };
+
+    return this.getAWSRequester(CloudwatchAction.PutLogEvents, payload).catch(() => undefined);
   }
 }
 
