@@ -24,6 +24,6 @@
     "declarationMap": true,
     "lib": [
       "es2022"
-    ]
-  }
+    ],
+  },
 }

@@ -1,6 +1,6 @@
 {
   "name": "cloudwatch-transport",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Cloudwatch transport for winston logger",
   "keywords": [
     "cloudwatch",
@@ -27,7 +27,8 @@
     "format": "prettier --write .",
     "check-format": "prettier --check .",
     "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
-    "ci": "yarn check-format && yarn check-exports && yarn build"
+    "ci": "yarn check-format && yarn check-exports && yarn build",
+    "test": "tsx --env-file .env"
   },
   "engines": {
     "npm": "please-use-yarn",
@@ -39,10 +40,13 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.16.4",
+    "@types/aws4": "^1.11.6",
     "prettier": "^3.3.3",
     "typescript": "^5.6.3"
   },
   "dependencies": {
+    "aws4": "^1.13.2",
+    "ky": "^1.7.2",
     "winston-transport": "^4.8.0"
   }
 }
