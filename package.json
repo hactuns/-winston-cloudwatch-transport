@@ -1,6 +1,6 @@
 {
   "name": "cloudwatch-transport",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Cloudwatch transport for winston logger",
   "keywords": [
     "cloudwatch",
