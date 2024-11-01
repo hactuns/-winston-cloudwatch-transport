@@ -16,33 +16,29 @@ Amazon Cloudwatch Transporter logs for [Winston](https://github.com/winstonjs/wi
 ## Usage
 
 ```ts
+import { createLogger } from 'winston';
 import CloudWatchTransport from 'winston-cloudwatch-transport';
 
-const cloudWatchTransport = new CloudWatchTransport({
-  logGroupName: 'my-log-group',
-  logStreamName: new Date().toISOString().replace(/[-:]/g, '/'),
-  awsCredentials: {
-    accessKeyId: 'aws-access-key',
-    secretAccessKey: 'aws-secret-access-key',
-    region: 'us-east-1',
-  },
-  formatLog: (item) => item,
+const Logger = createLogger({
+  ...,
+  transports: [
+    new CloudwatchTransport({
+      logGroupName: 'log-group-name',
+      logStreamName: 'log-stream-name',
+      awsCredentials: {
+        accessKeyId: 'aws-access-key',
+        secretAccessKey: 'aws-access-key',
+        region: 'aws-region',
+      },
+      enabled: String(process.env.NODE_ENV) === 'dev', // example
+    })
+  ]
 });
-
-const logger = winston.createLogger({
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    combineMessageAndSplat(),
-    winston.format.simple()
-  ),
-});
-
-logger.add(cloudWatchTransport);
 ```
 
 ## Options
 
-```ts
+```json
 {
   awsCredentials: { // required
     accessKeyId: '',
@@ -53,10 +49,10 @@ logger.add(cloudWatchTransport);
   logGroupName: '', // required
   logStreamName: '', // required
 
-  // Should send logs to CloudWatch
+  // Should send logs to CloudWatch. Default set to true
   enabled: boolean
 
-  // Would like to set to true if we are using serverless function to avoid request being shutdown
+  // Would like to set to true if we are using serverless function to avoid request being shutdown. Default set to false
   async: boolean
 
   // Customize log message
