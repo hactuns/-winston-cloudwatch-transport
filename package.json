@@ -1,6 +1,6 @@
 {
   "name": "cloudwatch-transport",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Cloudwatch transport for winston logger",
   "keywords": [
     "cloudwatch",
@@ -33,7 +33,7 @@
   "engines": {
     "npm": "please-use-yarn",
     "yarn": ">= 1.0.0",
-    "node": "20"
+    "node": ">= 14"
   },
   "publishConfig": {
     "access": "public"
