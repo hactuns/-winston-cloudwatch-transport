@@ -1,11 +1,14 @@
 {
   "name": "cloudwatch-transport",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Cloudwatch transport for winston logger",
   "keywords": [
     "cloudwatch",
     "winston",
-    "logger"
+    "logger",
+    "transport",
+    "log",
+    "logging"
   ],
   "homepage": "https://github.com/hactuns/winston-cloudwatch-transport",
   "bugs": {
