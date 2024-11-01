@@ -3,6 +3,7 @@
 Amazon Cloudwatch Transporter logs for [Winston](https://github.com/winstonjs/winston)
 
 ## Features
+
 - Tries very hard to deliver messages, even in case of errors
 - Does not fail or break when losing internet connection
 - Follows [AWS strict logging rules](https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutLogEvents.html)
@@ -13,6 +14,7 @@ Amazon Cloudwatch Transporter logs for [Winston](https://github.com/winstonjs/wi
 - Lightweight AWS requester
 
 ## Usage
+
 ```ts
 import CloudWatchTransport from 'winston-cloudwatch-transport';
 
@@ -31,7 +33,7 @@ const logger = winston.createLogger({
   format: winston.format.combine(
     winston.format.timestamp(),
     combineMessageAndSplat(),
-    winston.format.simple(),
+    winston.format.simple()
   ),
 });
 
@@ -53,8 +55,8 @@ logger.add(cloudWatchTransport);
 
   // Should send logs to CloudWatch
   enabled: boolean
-  
-  // Would like to set to true if we are using serverless function to avoid request being shutdown   
+
+  // Would like to set to true if we are using serverless function to avoid request being shutdown
   async: boolean
 
   // Customize log message
